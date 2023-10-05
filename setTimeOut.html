@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body{
+      background-image: url(https://upload2.inven.co.kr/upload/2019/12/21/bbs/i13192721665.gif);
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+    }
+
+    #root {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .heart {
+      width: 150px;
+      height: 150px;
+      background-image: url(https://bestanimations.com/Military/Explosions/explosion-animation-1.gif);
+      /* background-color: red; */
+      position: absolute;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .fadeout-animate {
+      animation: fadeout-animate 2s forwards;
+    }
+
+    @keyframes fadeout-animate {
+      form {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 1;
+        /* transform:translate3d(-500px); */
+        /* transform: translateZ(500px); */
+        transform: translateY(-5px);
+      }
+    }
+
+    .demo {
+      position: absolute;
+      margin-left: 50vw;
+    }
+
+    input{
+      position: absolute;
+      width: 150px;
+      height: 100px;
+      left: 80vw;
+      top: 10vh;
+      font-size: 50px;
+      text-align: center;
+
+    }
+    button{
+      width: 150px;
+      height: 100px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h2 onclick="showCoords(event)">클릭된 위치의 X좌표와 Y좌표를 표시합니다</h2>
+  <p id="demo"></p>
+  <input id="Timer" type="text" value="" readonly />
+
+  <div id="root">
+    <div id="heart-container"></div> <br>
+    <img id="heart-button"
+      src="https://i.namu.wiki/i/CqtLRRVE59hyWF7QciMkZyOJ6tcZ8QrD7zAky9tnxwHkeVkYMbR96K6qfd1jC3QqlGtJ5h-ZB9r4hZwN1DzokQ.gif"
+      OnClick="javascript:showCoords(event)" alt="슬라임" height="100" width="140">
+      <div id="heart-bar"></div>
+  </div>
+  <!--  -->
+  <button id="money">현질</button>
+
+  <script>
+    const heartButton = document.getElementById("heart-button");
+    const heart = document.getElementById("heart-bar");
+    const root = document.getElementById("root");
+
+
+    // heart.style.alignItems = "center";
+
+    heartButton.addEventListener("click", function () {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      //하트 요소를 컨테이너에 추가
+      heart.textContent = "HIT!"
+
+
+      const container = document.getElementById("heart-container");
+      container.appendChild(heart);
+      //생성한 하트 요소를 위 컨테이너 부분에 자식으로 추가
+      // 1초 == 1000 밀리세컨드 0.05초 = 50밀리세컨드 후에 fadeout-adnimate 효과 적용
+      setTimeout(function () {
+        heart.classList.add("fadeout-animate");
+        //위의 heart는 스타일링 클래스, fadeout-adnimate는 애니메이션 클래스
+      }, 50);
+      // fadeout-adnimte가 끄난 후에 하트 요소 제거
+      setTimeout(function () {
+        container.removeChild(heart);
+      }, 900);
+    });
+
+
+    let count = 0;
+    //마우스 클릭 좌표값 이벤트
+    function showCoords(event) {
+
+      let x = Math.floor(Math.random() * event.clientX + 50);
+      let y = Math.floor(Math.random() * event.clientY + 50);
+      count = count + 1;
+      let coords = "X 좌표 값: " + x + ", Y 좌표 값: " + y + "누른 횟수: " + count; //확인용
+      document.getElementById("demo").innerHTML = coords;
+
+      let x1 = x.toString();
+      let y1 = y.toString();
+
+      heartButton.style.position = "absolute";
+      heartButton.style.top = x1 + "px";
+      heartButton.style.left = y1 + "px";
+    }
+
+    //타이머 이벤트
+    const Timer = document.getElementById('Timer'); //스코어 기록창-분
+    let time = 60000;
+    let min = 1;
+    let sec = 60;
+
+    Timer.value = min + ":" + '00';
+
+    function TIMER() {
+      PlAYTIME = setInterval(function () {
+        time = time - 1000; //1초씩 줄어듦
+        min = time / (60 * 1000); //초를 분으로 나눠준다.
+
+        if (sec > 0) { //sec=60 에서 1씩 빼서 출력해준다.
+          sec = sec - 1;
+          Timer.value = Math.floor(min) + ':' + sec; 
+          //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+
+        }
+
+        //점수 흭득 후 결과창
+        if (sec === 0) {
+          // 0에서 -1을 하면 -59가 출력된다.
+          // 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
+          sec = 60;
+          Timer.value = Math.floor(min) + ':' + '00'
+
+
+          root.style.filter = "blur(5px)"
+          let createDiv = document.createElement('div')
+          document.body.appendChild(createDiv)
+          let div = document.body.children[2]
+          div.textContent = `${count * 10}점을 흭득하였다!`
+          div.style.color = "red";
+          div.style.top = "80vh"
+          div.style.left = "15vw"
+          div.style.height = "30vh";
+          div.style.fontSize = "8vw";
+          div.style.width = "80vw";
+          div.style.position = "absolute";
+
+        }
+
+      }, 1000); //1초마다 
+    }
+    TIMER();
+    setTimeout(function () {
+      clearInterval(PlAYTIME);
+    }, 60000);//3분이 되면 타이머를 삭제한다.
+
+  </script>
+</body>
+
+</html>
