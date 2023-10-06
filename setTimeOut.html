@@ -12,7 +12,8 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body{
+
+    body {
       background-image: url(https://upload2.inven.co.kr/upload/2019/12/21/bbs/i13192721665.gif);
       width: 100vw;
       height: 100vh;
@@ -60,7 +61,7 @@
       margin-left: 50vw;
     }
 
-    input{
+    input {
       position: absolute;
       width: 150px;
       height: 100px;
@@ -70,10 +71,11 @@
       text-align: center;
 
     }
-    button{
+
+    /* button {
       width: 150px;
       height: 100px;
-    }
+    } */
   </style>
 
 </head>
@@ -88,16 +90,23 @@
     <img id="heart-button"
       src="https://i.namu.wiki/i/CqtLRRVE59hyWF7QciMkZyOJ6tcZ8QrD7zAky9tnxwHkeVkYMbR96K6qfd1jC3QqlGtJ5h-ZB9r4hZwN1DzokQ.gif"
       OnClick="javascript:showCoords(event)" alt="슬라임" height="100" width="140">
-      <div id="heart-bar"></div>
+    <div id="heart-bar"></div>
   </div>
+
+  <button id="start">GAME START</button>
   <!--  -->
-  <button id="money">현질</button>
+  <!-- <button id="money">현질</button> -->
 
   <script>
     const heartButton = document.getElementById("heart-button");
     const heart = document.getElementById("heart-bar");
     const root = document.getElementById("root");
 
+    const start = document.getElementById("start");
+
+  
+
+    console.dir(document.body)
 
     // heart.style.alignItems = "center";
 
@@ -124,6 +133,13 @@
 
 
     let count = 0;
+    //게임 시작 버튼
+    start.addEventListener("click", function(){
+
+    })
+
+
+   
     //마우스 클릭 좌표값 이벤트
     function showCoords(event) {
 
@@ -139,6 +155,12 @@
       heartButton.style.position = "absolute";
       heartButton.style.top = x1 + "px";
       heartButton.style.left = y1 + "px";
+
+
+      heart.style.position = "absolute";
+      heart.style.top = x1 + "px";
+      heart.style.left = y1 + "px";
+
     }
 
     //타이머 이벤트
@@ -156,9 +178,8 @@
 
         if (sec > 0) { //sec=60 에서 1씩 빼서 출력해준다.
           sec = sec - 1;
-          Timer.value = Math.floor(min) + ':' + sec; 
+          Timer.value = Math.floor(min) + ':' + sec;
           //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
-
         }
 
         //점수 흭득 후 결과창
@@ -168,15 +189,14 @@
           sec = 60;
           Timer.value = Math.floor(min) + ':' + '00'
 
-
-          root.style.filter = "blur(5px)"
-          let createDiv = document.createElement('div')
-          document.body.appendChild(createDiv)
-          let div = document.body.children[2]
+          root.style.filter = "blur(5px)";
+          let createDiv = document.createElement('div');
+          document.body.appendChild(createDiv);
+          let div = document.body.children[5];
           div.textContent = `${count * 10}점을 흭득하였다!`
-          div.style.color = "red";
-          div.style.top = "80vh"
-          div.style.left = "15vw"
+          div.style.backgroundColor = "blue";
+          div.style.top = "80vh";
+          div.style.left = "15vw";
           div.style.height = "30vh";
           div.style.fontSize = "8vw";
           div.style.width = "80vw";
